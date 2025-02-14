@@ -6,22 +6,15 @@ const {
   deleteWorkout,
   updateWorkout,
 } = require("../controllers/workoutController");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-// Get all workouts
-router.get("/", getWorkouts);
-
-// Get a single workout
-router.get("/:id", getWorkout);
-
-// Post a new workout
-router.post("/", createWorkout);
-
-// Delete a workout
-router.delete("/:id", deleteWorkout);
-
-// Update a workout
-router.patch("/:id", updateWorkout);
+// Protect routes
+router.get("/", authMiddleware, getWorkouts);
+router.get("/:id", authMiddleware, getWorkout);
+router.post("/", authMiddleware, createWorkout);
+router.delete("/:id", authMiddleware, deleteWorkout);
+router.patch("/:id", authMiddleware, updateWorkout);
 
 module.exports = router;
